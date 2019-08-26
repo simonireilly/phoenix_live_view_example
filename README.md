@@ -2,6 +2,13 @@
 
 Forked from the official repo and dockered to make usage easier.
 
+- [Demo](#demo)
+  - [Dependencies](#dependencies)
+    - [Docker](#docker)
+    - [Local](#local)
+    - [Usage](#usage)
+  - [Learn more](#learn-more)
+
 ## Dependencies
 
 ### Docker
