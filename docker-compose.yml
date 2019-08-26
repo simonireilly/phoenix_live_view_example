@@ -1,0 +1,43 @@
+version: '3.5'
+
+services:
+  phoenix:
+    build:
+      context: .
+    command:
+      - sh
+      - -c
+      - |
+        mix deps.get
+        mix ecto.create
+        mix ecto.migrate
+        cd assets && npm install && cd ..
+        mix phx.server
+    environment:
+      DATABASE_URL: postgres://postgres:postgres:5432/live_view_example
+    volumes:
+      - phoenix_deps:/app/deps
+      - phoenix_build:/app/_build
+      - phoenix_node_modules:/assets/node_modules
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    ports:
+      - 5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+  phoenix_deps:
+  phoenix_build:
+  phoenix_node_modules:
